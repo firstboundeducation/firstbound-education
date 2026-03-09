@@ -362,6 +362,38 @@ document.querySelector("#app").innerHTML = `
             <span class="arrow-icon">↷</span>
           </button>
 
+                    <button
+            id="paste-clipboard-button"
+            class="icon-button"
+            type="button"
+            title="Paste image from clipboard"
+            aria-label="Paste image from clipboard"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="6" y="5" width="12" height="15" rx="2"></rect>
+              <path d="M9 5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path>
+              <path d="M9 10h6"></path>
+              <path d="M9 14h4"></path>
+            </svg>
+          </button>
+
+          <button
+            id="delete-selection-button"
+            class="icon-button danger-icon-button"
+            type="button"
+            title="Delete selected item"
+            aria-label="Delete selected item"
+            disabled
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16"></path>
+              <path d="M9 7V4h6v3"></path>
+              <path d="M7 7l1 13h8l1-13"></path>
+              <path d="M10 11v5"></path>
+              <path d="M14 11v5"></path>
+            </svg>
+          </button>
+
           <button
             id="clear-page-button"
             class="icon-button danger-icon-button"
@@ -621,6 +653,8 @@ const zoomReadout = document.getElementById("zoom-readout");
 const resetZoomButton = document.getElementById("reset-zoom-button");
 const undoButton = document.getElementById("undo-button");
 const redoButton = document.getElementById("redo-button");
+const pasteClipboardButton = document.getElementById("paste-clipboard-button");
+const deleteSelectionButton = document.getElementById("delete-selection-button");
 const clearPageButton = document.getElementById("clear-page-button");
 
 const pageScroll = document.getElementById("page-scroll");
@@ -798,6 +832,27 @@ function getViewportPointFromClient(clientPoint) {
     x: clientPoint.x - rect.left,
     y: clientPoint.y - rect.top
   };
+}
+
+function getDefaultPasteAnchorPoint() {
+  const logicalWidth = getLogicalSurfaceWidth();
+  const logicalHeight = getLogicalSurfaceHeight();
+
+  const x =
+    (pageScroll.scrollLeft + pageScroll.clientWidth / 2) / state.zoomScale;
+  const y =
+    (pageScroll.scrollTop + pageScroll.clientHeight / 2) / state.zoomScale;
+
+  return {
+    x: Math.max(20, Math.min(logicalWidth - 20, x)),
+    y: Math.max(20, Math.min(logicalHeight - 20, y))
+  };
+}
+
+async function handlePasteClipboardButton() {
+  closeCanvasContextMenu();
+  const anchorPoint = getDefaultPasteAnchorPoint();
+  await pasteImageFromSystemClipboardAt(anchorPoint);
 }
 
 function getContentPointFromViewportPoint(viewportPoint) {
@@ -2450,6 +2505,25 @@ function selectionHasContent() {
   );
 }
 
+function updateSelectionActionButtons() {
+  if (!deleteSelectionButton) return;
+
+  deleteSelectionButton.disabled = !(
+    selectionHasContent() || state.selectedImageId
+  );
+}
+
+function deleteSelectedContent() {
+  if (selectionHasContent()) {
+    deleteLassoSelection();
+    return;
+  }
+
+  if (state.selectedImageId) {
+    deleteSelectedImage();
+  }
+}
+
 function computeLassoSelectionBounds(selection = state.lassoSelection) {
   if (!selection) return null;
 
@@ -3094,6 +3168,7 @@ function redrawLiveLayer() {
 
   if (selectionHasContent()) {
     drawLassoSelectionOverlay(liveCtx, state.lassoSelection);
+    updateSelectionActionButtons();
     return;
   }
 
@@ -3101,6 +3176,8 @@ function redrawLiveLayer() {
   if (selectedImage) {
     drawImageSelection(liveCtx, selectedImage);
   }
+
+  updateSelectionActionButtons();
 }
 
 function resizeCanvases() {
@@ -4325,6 +4402,15 @@ togglePagesButton.addEventListener("click", () => {
 
 undoButton.addEventListener("click", undo);
 redoButton.addEventListener("click", redo);
+
+pasteClipboardButton.addEventListener("click", async () => {
+  await handlePasteClipboardButton();
+});
+
+deleteSelectionButton.addEventListener("click", () => {
+  deleteSelectedContent();
+});
+
 clearPageButton.addEventListener("click", clearCurrentPage);
 
 document.addEventListener("pointerdown", (e) => {
