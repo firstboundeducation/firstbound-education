@@ -117,7 +117,7 @@ select {
   color: #4b5563;
 }
 
-/*.hero-text {
+.hero-text {
   text-align: center;
 }
 
@@ -126,10 +126,10 @@ select {
   width: 100%;
 }*/
 
-/*.brand-education {
+.brand-education {
   display: block;
   text-align: center;
-}*/
+}
 
 h2 {
   font-family: var(--font-cormorant), serif;
