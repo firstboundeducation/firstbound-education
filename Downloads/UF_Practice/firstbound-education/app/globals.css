@@ -224,7 +224,7 @@ p {
     filter 0.5s ease,
     transform 0.35s ease,
     box-shadow 0.35s ease;
-}*/
+}
 
 /* soft overlay */
 .fake-image::before {
