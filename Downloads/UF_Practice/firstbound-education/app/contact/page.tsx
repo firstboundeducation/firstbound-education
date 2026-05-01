@@ -33,14 +33,20 @@ export default function ContactPage() {
     <main className="page">
       <div className="container">
         <section className="section">
-          <div className="card cta">
-            <h1>Contact Us</h1>
+            <div className="card cta">
+                <h1>Contact Us</h1>
 
-            <p className="brand-descriptions">
-              Have a question about FirstBound Education? Use the information
-              below to contact us or get started.
-            </p>
-          </div>
+                <p className="brand-descriptions">
+                Have a question about FirstBound Education? Use the information
+                below to contact us or get started.
+                </p>
+
+                <div className="button-row" style={{ justifyContent: "center" }}>
+                <Link className="secondary-button" href="/">
+                    Back to Home
+                </Link>
+                </div>
+            </div>
         </section>
 
         <section className="section">
@@ -59,22 +65,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="card cta">
-            <h2>FirstBound Education</h2>
-
-            <p>
-              We are working to make tutoring more accessible while giving
-              tutors a meaningful way to serve their community.
-            </p>
-
-            <div className="button-row" style={{ justifyContent: "center" }}>
-              <Link className="secondary-button" href="/">
-                Back to Home
-              </Link>
-            </div>
-          </div>
-        </section>
+        
       </div>
     </main>
   );
