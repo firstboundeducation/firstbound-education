@@ -106,15 +106,30 @@ select {
 }
 
 .school-credit {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  text-align: center;
+  margin: 0.6rem auto 1.2rem auto;
+
   font-family: var(--font-montserrat);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-align: center;
   color: #4b5563;
 }
+
+.hero-text {
+  text-align: center;
+}
+
+.brand-title {
+  text-align: center;
+  width: 100%;
+}
+
+/*.brand-education {
+  display: block;
+  text-align: center;
+}*/
 
 h2 {
   font-family: var(--font-cormorant), serif;
@@ -209,7 +224,7 @@ p {
     filter 0.5s ease,
     transform 0.35s ease,
     box-shadow 0.35s ease;
-}
+}*/
 
 /* soft overlay */
 .fake-image::before {
