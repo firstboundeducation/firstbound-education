@@ -32,8 +32,11 @@ export default function HomePage() {
               <span className="brand-first">first</span>
               <span className="brand-bound">bound</span>
               <span className="brand-education"> ✨EDUCATION✨  </span>
-              <span className="brand-descriptions"> Brought to you by the students of Timber Creek High School  </span>
-            </h1>
+            </h1> 
+
+            <p className="school-credit">
+              Brought To You By The Students Of Timber Creek High School
+            </p>
 
             <p className="brand-descriptions">
               FirstBound Education helps students get accessible academic
