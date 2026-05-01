@@ -31,7 +31,8 @@ export default function HomePage() {
             <h1 className="brand-title">
               <span className="brand-first">first</span>
               <span className="brand-bound">bound</span>
-              <span className="brand-education">✨EDUCATION✨  </span>
+              <span className="brand-education"> ✨EDUCATION✨  </span>
+              <span className="brand-descriptions"> Brought to you by the students of Timber Creek High School  </span>
             </h1>
 
             <p className="brand-descriptions">
