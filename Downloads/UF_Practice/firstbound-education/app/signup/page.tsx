@@ -6,11 +6,25 @@ import { supabase } from "../../lib/supabaseClient";
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState("student");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  const inputStyle = {
+    width: "100%",
+    padding: "12px",
+    marginBottom: "10px",
+    borderRadius: "10px",
+    border: "1px solid #ccc",
+  };
+
   const handleSignup = async () => {
+    if (role === "student" && !phoneNumber.trim()) {
+      setMessage("Please enter a phone number.");
+      return;
+    }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -18,6 +32,7 @@ export default function SignupPage() {
         data: {
           full_name: fullName,
           role: role,
+          phone_number: role === "student" ? phoneNumber : null,
         },
       },
     });
@@ -39,42 +54,34 @@ export default function SignupPage() {
           placeholder="Full name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "10px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-          }}
+          style={inputStyle}
         />
 
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "10px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-          }}
+          style={inputStyle}
         >
           <option value="student">Student</option>
           <option value="tutor">Tutor</option>
         </select>
+
+        {role === "student" && (
+          <input
+            type="tel"
+            placeholder="Phone number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            style={inputStyle}
+          />
+        )}
 
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "10px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-          }}
+          style={inputStyle}
         />
 
         <input
@@ -83,11 +90,8 @@ export default function SignupPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{
-            width: "100%",
-            padding: "12px",
+            ...inputStyle,
             marginBottom: "20px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
           }}
         />
 

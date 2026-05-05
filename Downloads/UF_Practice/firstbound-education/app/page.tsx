@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import UserDashboardButton from "../components/userDashboardButton";
 
 const tileInfo = {
   tutoring: {
@@ -25,6 +26,7 @@ export default function HomePage() {
 
   return (
     <main className="page">
+      <UserDashboardButton />
       <div className="container">
         <section className="hero">
           <div className="hero-text">
@@ -82,7 +84,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section" style={{ marginTop: "-80px" }}>
           <h2>About us</h2>
 
           <p className="brand-descriptions">
