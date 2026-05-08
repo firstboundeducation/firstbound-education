@@ -75,6 +75,10 @@ export default function LoginPage() {
           Log in
         </button>
 
+        <h1 className="signup-header">
+          <a href="https://firstboundeducation.org/signup"> <u>Dont have an account? Sign Up!</u> </a>
+        </h1>
+
         {message && (
           <p style={{ marginTop: "20px", color: "red" }}>
             {message}
