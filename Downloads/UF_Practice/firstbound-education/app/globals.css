@@ -731,3 +731,103 @@ p {
   font-size: 1rem;
   color:rgba(7, 27, 58, 0.38);
 }
+
+.pulse-glow {
+  animation: pulseGlow 1.35s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 18px rgba(255, 205, 80, 0.75),
+      0 0 36px rgba(68, 142, 255, 0.45);
+    transform: scale(1.04);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+    transform: scale(1);
+  }
+}
+
+.fake-image.tile-pulse-glow {
+  animation: imageTilePulseGlow 1.4s ease-in-out infinite;
+  filter: brightness(0.95) saturate(1);
+}
+
+@keyframes imageTilePulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 18px rgba(255, 205, 80, 0.85),
+      0 0 38px rgba(17, 54, 120, 0.45);
+    transform: scale(1.035);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+    transform: scale(1);
+  }
+}
+
+/* Signup + login/dashboard button bounce on hover */
+.primary-button,
+.secondary-button,
+.user-dashboard-button {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.user-dashboard-button:hover {
+  animation: buttonBounce 0.45s ease;
+  filter: brightness(1.08);
+}
+
+.primary-button:hover {
+  box-shadow:
+    0 0 18px rgba(56, 189, 248, 0.45),
+    0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+.secondary-button:hover {
+  box-shadow:
+    0 0 18px rgba(34, 197, 94, 0.45),
+    0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+.user-dashboard-button:hover {
+  box-shadow:
+    0 0 20px rgba(37, 99, 235, 0.55),
+    0 0 42px rgba(246, 196, 83, 0.32);
+}
+
+@keyframes buttonBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  35% {
+    transform: translateY(-3px) scale(1.04);
+  }
+
+  60% {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  100% {
+    transform: translateY(-2px) scale(1.02);
+  }
+}

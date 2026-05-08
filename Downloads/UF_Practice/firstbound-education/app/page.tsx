@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import UserDashboardButton from "../components/userDashboardButton";
 
@@ -24,17 +24,63 @@ export default function HomePage() {
     null
   );
 
+  const [shouldPulseTiles, setShouldPulseTiles] = useState(false);
+  const [hasClickedTile, setHasClickedTile] = useState(false);
+
+  useEffect(() => {
+    if (hasClickedTile) return;
+
+    const timer = setTimeout(() => {
+      setShouldPulseTiles(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [hasClickedTile]);
+
+  const handleTileClick = (tile: keyof typeof tileInfo) => {
+    setHasClickedTile(true);
+    setShouldPulseTiles(false);
+    setActiveTile(tile);
+  };
+
   return (
     <main className="page">
+      <style jsx global>{`
+        .fake-image.tile-pulse-glow {
+          animation: imageTilePulseGlow 1.4s ease-in-out infinite;
+          filter: brightness(0.95) saturate(1);
+        }
+
+        @keyframes imageTilePulseGlow {
+          0% {
+            box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+            transform: scale(1);
+          }
+
+          50% {
+            box-shadow:
+              0 0 18px rgba(255, 205, 80, 0.85),
+              0 0 38px rgba(17, 54, 120, 0.45);
+            transform: scale(1.035);
+          }
+
+          100% {
+            box-shadow: 0 0 0 rgba(255, 205, 80, 0);
+            transform: scale(1);
+          }
+        }
+      `}</style>
+
       <UserDashboardButton />
+
       <div className="container">
         <section className="hero">
           <div className="hero-text">
             <h1 className="brand-title">
               <span className="brand-first">first</span>
               <span className="brand-bound">bound</span>
-              <span className="brand-education"> ✨EDUCATION✨  </span>
-            </h1> 
+              <span className="brand-education"> ✨EDUCATION✨ </span>
+            </h1>
 
             <p className="school-credit">
               Brought To You By The Students Of Timber Creek High School
@@ -59,25 +105,31 @@ export default function HomePage() {
 
           <div className="image-stack">
             <button
-              className="fake-image tile-one"
+              className={`fake-image tile-one ${
+                shouldPulseTiles ? "tile-pulse-glow" : ""
+              }`}
               type="button"
-              onClick={() => setActiveTile("tutoring")}
+              onClick={() => handleTileClick("tutoring")}
             >
               <span>1-on-1 Tutoring</span>
             </button>
 
             <button
-              className="fake-image tile-two"
+              className={`fake-image tile-two ${
+                shouldPulseTiles ? "tile-pulse-glow" : ""
+              }`}
               type="button"
-              onClick={() => setActiveTile("growth")}
+              onClick={() => handleTileClick("growth")}
             >
               <span>Student Growth</span>
             </button>
 
             <button
-              className="fake-image tile-three"
+              className={`fake-image tile-three ${
+                shouldPulseTiles ? "tile-pulse-glow" : ""
+              }`}
               type="button"
-              onClick={() => setActiveTile("community")}
+              onClick={() => handleTileClick("community")}
             >
               <span>Community Impact</span>
             </button>
